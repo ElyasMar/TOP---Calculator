@@ -27,11 +27,27 @@ const calculator = document.getElementById("calculator");
  // creating the calculator's display
  const calculatorDisplay = document.createElement("div");
 
+ // creating a div to hold operators
+ const opDiv = document.createElement(div);
+
+ // creating a div to hold digits
+ const numsDiv = document.createElement(div);
+
  // creating operation buttons inside the dom
  const addButton = document.createElement("button");
  const subButton = document.createElement("button");
  const multiplyButton = document.createElement("button");
  const divideButton = document.createElement("button");
+
+ // creating buttons for all digits
+ const nums = {}
+
+ for (let i = 0; i <= 9; i++) {
+    const button = document.createElement("button")
+    button.textContent = i;
+    button.className = "numButton"
+    nums[`button${i}`] = button
+ }
 
  // giving buttons text and assigning them to classes
  (addButton.textContent = "+", addButton.className = "opButton");
@@ -41,10 +57,27 @@ const calculator = document.getElementById("calculator");
 
  // appending children
  calculator.appendChild(calculatorDisplay);
- calculator.appendChild(addButton);
- calculator.appendChild(multiplyButton);
- calculator.appendChild(subButton);
- calculator.appendChild(divideButton);
+ calculator.appendChild(opDiv);
+ calculator.appendChild(numsDiv)
+ opDiv.appendChild(addButton);
+ opDiv.appendChild(multiplyButton);
+ opDiv.appendChild(subButton);
+ opDiv.appendChild(divideButton);
+ numsDiv.appendChild(
+   nums.button1,
+   nums.button2,
+   nums.button3,
+   nums.button4,
+   nums.button5,
+   nums.button6,
+   nums.button7,
+   nums.button8,
+   nums.button9,
+   nums.button0
+ )
+
+ // making a global variable for the numsButton
+ const numBtns = document.querySelectorAll(".numButton")
 
  // having a variable to to store all operation buttons
  const opButtons = document.querySelectorAll(".opButton")
@@ -70,7 +103,8 @@ const calculator = document.getElementById("calculator");
 
  opButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        console.log(button.textContent)
+        operator = button.textContent
+        calculatorDisplay.textContent = operator;
     })
  })
 
