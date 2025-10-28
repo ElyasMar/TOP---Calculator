@@ -18,9 +18,9 @@ const calculator = document.getElementById("calculator");
  }
 
  // creating variables to hold the display values
- let firstNumber = 0;
+ let firstNumber = "";
  let operator = "";
- let secondNumber = 0;
+ let secondNumber = "";
 
  const operators = ["+", "-", "*", "/"];
 
@@ -28,16 +28,22 @@ const calculator = document.getElementById("calculator");
  const calculatorDisplay = document.createElement("div");
 
  // creating a div to hold operators
- const opDiv = document.createElement(div);
+ const opDiv = document.createElement("div");
 
  // creating a div to hold digits
- const numsDiv = document.createElement(div);
+ const numsDiv = document.createElement("div");
 
  // creating operation buttons inside the dom
  const addButton = document.createElement("button");
  const subButton = document.createElement("button");
  const multiplyButton = document.createElement("button");
  const divideButton = document.createElement("button");
+
+ // creting . and = buttons
+ const dotButton = document.createElement("button")
+ dotButton.textContent = ".";
+ const equalsButton = document.createElement("button")
+
 
  // creating buttons for all digits
  const nums = {}
@@ -54,6 +60,7 @@ const calculator = document.getElementById("calculator");
  (subButton.textContent = "-", subButton.className = "opButton");
  (multiplyButton.textContent = "*", multiplyButton.className = "opButton");
  (divideButton.textContent = "/", divideButton.className = "opButton");
+ (equalsButton.textContent = "=", equalsButton.className = "opButton");
 
  // appending children
  calculator.appendChild(calculatorDisplay);
@@ -63,7 +70,7 @@ const calculator = document.getElementById("calculator");
  opDiv.appendChild(multiplyButton);
  opDiv.appendChild(subButton);
  opDiv.appendChild(divideButton);
- numsDiv.appendChild(
+ numsDiv.append(
    nums.button1,
    nums.button2,
    nums.button3,
@@ -73,7 +80,9 @@ const calculator = document.getElementById("calculator");
    nums.button7,
    nums.button8,
    nums.button9,
-   nums.button0
+   dotButton,
+   nums.button0,
+   equalsButton
  )
 
  // making a global variable for the numsButton
@@ -87,24 +96,46 @@ const calculator = document.getElementById("calculator");
     
     switch (operator) {
         case "+":
-            console.log(add(firstNumber, secondNumber));
-            break;
+            return add(firstNumber, secondNumber);
         case "-":
-            console.log(subtract(firstNumber, secondNumber));
-            break;
+            return subtract(firstNumber, secondNumber);
         case "*":
-            console.log(multiply(firstNumber, secondNumber));
-            break;
+            return multiply(firstNumber, secondNumber);
         case "/":
-            console.log(divide(firstNumber, secondNumber));
-            break;
+            return divide(firstNumber, secondNumber);
     }
  }
 
+ let currentNum1 = "";
+ let currentNum2 = "";
+
+ numBtns.forEach((btn) => {
+   btn.addEventListener("click", () => {
+      if (!operator) {
+         firstNumber += btn.textContent;
+         currentNum1 = calculatorDisplay.textContent = firstNumber;
+      }
+      else {
+         secondNumber += btn.textContent;
+         calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`
+      }
+   })
+ })
+
+
  opButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        operator = button.textContent
-        calculatorDisplay.textContent = operator;
+         button.addEventListener("click", () => {
+         if (button.textContent === "=") {
+            let result = operate(operator, Number(firstNumber), Number(secondNumber));
+            calculatorDisplay.textContent = result;
+            firstNumber = result;
+            secondNumber = "";
+            operator = "";
+         }
+         else if(!operator) {
+            operator = button.textContent;
+            calculatorDisplay.textContent = `${currentNum1} ${operator}`;
+         }
     })
  })
 
