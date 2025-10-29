@@ -179,6 +179,15 @@ const calculator = document.getElementById("calculator");
             operator = button.textContent;
             calcDisplay.textContent = `${firstNumber} ${operator}`;
          }
+         else if (operator) {
+            if (secondNumber) {
+               firstNumber = operate(operator, Number(firstNumber), Number(secondNumber));
+               resultDisplay.textContent = firstNumber;
+               secondNumber = "";
+            }
+            operator = button.textContent;
+            calcDisplay.textContent = `${firstNumber} ${operator}`;
+         }
     })
  })
 
