@@ -173,7 +173,6 @@ const calculator = document.getElementById("calculator");
             firstNumber = result;
             secondNumber = "";
             operator = "";
-            calcDisplay.textContent = ""
          }
          else if(!operator) {
             operator = button.textContent;
