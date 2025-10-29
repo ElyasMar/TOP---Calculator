@@ -14,6 +14,7 @@ const calculator = document.getElementById("calculator");
  }
 
  const divide = (num1, num2) => {
+   if (num2 === 0) return "Error";
     return num1 / num2;
  }
 
@@ -117,6 +118,17 @@ const calculator = document.getElementById("calculator");
             return divide(firstNumber, secondNumber);
     }
  }
+
+ dotButton.addEventListener("click", () => {
+   if (!operator && !firstNumber.includes(".")){
+      firstNumber += ".";
+      calcDisplay.textContent = firstNumber
+   }
+   else if (operator && !secondNumber.includes(".")) {
+      secondNumber += ".";
+      calcDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+   }
+ })
 
  const clearAll = () => {
    calcDisplay.textContent = "";
