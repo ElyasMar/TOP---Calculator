@@ -118,8 +118,23 @@ const calculator = document.getElementById("calculator");
     }
  }
 
+ const clearAll = () => {
+   calcDisplay.textContent = "";
+   resultDisplay.textContent = "";
+   firstNumber = "";
+   secondNumber = "";
+   operator = "";
+ }
+
+ const clearRecent = () => {
+   calcDisplay.textContent = calcDisplay.textContent.toString().slice(0, -1);
+ }
+
  let currentNum1 = "";
  let currentNum2 = "";
+
+ allClear.addEventListener("click", clearAll);
+ clearButton.addEventListener("click", clearRecent);
 
  numBtns.forEach((btn) => {
    btn.addEventListener("click", () => {
@@ -137,16 +152,20 @@ const calculator = document.getElementById("calculator");
 
  opButtons.forEach((button) => {
          button.addEventListener("click", () => {
-         if (button.textContent === "=") {
+         if (!firstNumber) {
+            calcDisplay.textContent = "";
+         }
+         else if (button.textContent === "=" && secondNumber) {
             let result = operate(operator, Number(firstNumber), Number(secondNumber));
             resultDisplay.textContent = result;
             firstNumber = result;
             secondNumber = "";
             operator = "";
+            calcDisplay.textContent = ""
          }
          else if(!operator) {
             operator = button.textContent;
-            calcDisplay.textContent = `${currentNum1} ${operator}`;
+            calcDisplay.textContent = `${firstNumber} ${operator}`;
          }
     })
  })
