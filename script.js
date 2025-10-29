@@ -27,6 +27,10 @@ const calculator = document.getElementById("calculator");
  // creating the calculator's display
  const calculatorDisplay = document.createElement("div");
 
+ // dividing display to calculation and result
+ const calcDisplay = document.createElement("div");
+ const resultDisplay = document.createElement("div");
+
  // creating a div to hold operators
  const opDiv = document.createElement("div");
 
@@ -38,6 +42,8 @@ const calculator = document.getElementById("calculator");
  const subButton = document.createElement("button");
  const multiplyButton = document.createElement("button");
  const divideButton = document.createElement("button");
+ const allClear = document.createElement("button");
+ const clearButton = document.createElement("button");
 
  // creting . and = buttons
  const dotButton = document.createElement("button")
@@ -61,9 +67,13 @@ const calculator = document.getElementById("calculator");
  (multiplyButton.textContent = "*", multiplyButton.className = "opButton");
  (divideButton.textContent = "/", divideButton.className = "opButton");
  (equalsButton.textContent = "=", equalsButton.className = "opButton");
+ (allClear.textContent = "AC", allClear.className = "allClear");
+ (clearButton.textContent = "C", clearButton.className = "clear");
 
  // appending children
  calculator.appendChild(calculatorDisplay);
+ calculatorDisplay.appendChild(calcDisplay);
+ calculatorDisplay.appendChild(resultDisplay);
  calculator.appendChild(opDiv);
  calculator.appendChild(numsDiv)
  opDiv.appendChild(addButton);
@@ -71,6 +81,8 @@ const calculator = document.getElementById("calculator");
  opDiv.appendChild(subButton);
  opDiv.appendChild(divideButton);
  numsDiv.append(
+   allClear,
+   clearButton,
    nums.button1,
    nums.button2,
    nums.button3,
@@ -113,11 +125,11 @@ const calculator = document.getElementById("calculator");
    btn.addEventListener("click", () => {
       if (!operator) {
          firstNumber += btn.textContent;
-         currentNum1 = calculatorDisplay.textContent = firstNumber;
+         currentNum1 = calcDisplay.textContent = firstNumber;
       }
       else {
          secondNumber += btn.textContent;
-         calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`
+         calcDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`
       }
    })
  })
@@ -127,14 +139,14 @@ const calculator = document.getElementById("calculator");
          button.addEventListener("click", () => {
          if (button.textContent === "=") {
             let result = operate(operator, Number(firstNumber), Number(secondNumber));
-            calculatorDisplay.textContent = result;
+            resultDisplay.textContent = result;
             firstNumber = result;
             secondNumber = "";
             operator = "";
          }
          else if(!operator) {
             operator = button.textContent;
-            calculatorDisplay.textContent = `${currentNum1} ${operator}`;
+            calcDisplay.textContent = `${currentNum1} ${operator}`;
          }
     })
  })
